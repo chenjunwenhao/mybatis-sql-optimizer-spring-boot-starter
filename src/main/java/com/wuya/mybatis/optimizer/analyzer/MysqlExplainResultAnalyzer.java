@@ -53,10 +53,20 @@ public class MysqlExplainResultAnalyzer implements ExplainResultAnalyzer {
         result.setSql(originalSql);
 
         List<Map<String, Object>> explainResults = new ArrayList<>();
+        ResultSetMetaData metaData = rs.getMetaData();
+        int colCount = metaData.getColumnCount();
+        // 标准表格格式(MySQL等)
         while (rs.next()) {
-            String jsonResult = rs.getString(1);
             Map<String, Object> row = new LinkedHashMap<>();
-            row.put("EXPLAIN", jsonResult);
+            for (int i = 1; i <= colCount; i++) {
+                try {
+                    String colName = metaData.getColumnLabel(i);
+                    Object value = rs.getObject(i);
+                    row.put(colName, value != null ? value.toString() : null);
+                } catch (SQLException e) {
+                    row.put(metaData.getColumnName(i), "[ERROR]");
+                }
+            }
             explainResults.add(row);
         }
         result.setExplainResults(explainResults);
