@@ -2,6 +2,7 @@ package com.wuya.mybatis.optimizer.advice;
 
 import com.wuya.mybatis.optimizer.SqlExplainResult;
 import com.wuya.mybatis.optimizer.SqlOptimizationAdvice;
+import com.wuya.mybatis.optimizer.analyzer.DatabaseType;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,18 +16,21 @@ public class JoinAdviceGenerator implements SqlOptimizationAdvice {
         List<String> adviceList = new ArrayList<>();
 
         for (Map<String, Object> row : explainResult.getExplainResults()) {
-            String selectType = String.valueOf(row.get("select_type"));
-            String type = String.valueOf(row.get("type"));
-
-            if (selectType.contains("DEPENDENT SUBQUERY")) {
-                adviceList.add("Dependent subquery detected, consider rewriting as JOIN");
+            // MySQL执行计划分析
+            if ("ALL".equals(row.get("type"))) {
+                adviceList.add("全表扫描JOIN操作检测到，考虑添加适当的索引");
             }
 
-            if ("ALL".equalsIgnoreCase(type) && row.get("table") != null && row.get("table").toString().contains("JOIN")) {
-                adviceList.add("Full table scan in JOIN operation detected, consider adding appropriate indexes");
+            // PostgreSQL执行计划分析
+            if (row.containsKey("EXPLAIN") && row.get("EXPLAIN").toString().contains("Seq Scan")) {
+                adviceList.add("顺序扫描JOIN操作检测到，考虑优化JOIN条件");
             }
         }
 
         return adviceList;
+    }
+    @Override
+    public boolean supports(DatabaseType dbType) {
+        return true;
     }
 }

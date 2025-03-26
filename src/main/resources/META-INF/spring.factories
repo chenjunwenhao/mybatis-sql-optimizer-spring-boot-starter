@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.example.mybatis.autoconfigure.MybatisSqlOptimizerAutoConfiguration
+com.wuya.mybatis.autoconfigure.MybatisSqlOptimizerAutoConfiguration

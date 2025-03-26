@@ -2,6 +2,7 @@ package com.wuya.mybatis.optimizer.advice;
 
 import com.wuya.mybatis.optimizer.SqlExplainResult;
 import com.wuya.mybatis.optimizer.SqlOptimizationAdvice;
+import com.wuya.mybatis.optimizer.analyzer.DatabaseType;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -26,5 +27,9 @@ public class IndexAdviceGenerator implements SqlOptimizationAdvice {
         }
 
         return adviceList;
+    }
+    @Override
+    public boolean supports(DatabaseType dbType) {
+        return dbType.equals(DatabaseType.MYSQL);
     }
 }

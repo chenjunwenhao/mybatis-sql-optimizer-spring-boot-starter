@@ -4,6 +4,21 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * 配置属性类
+ * @author wuya
+ * @date 2020-06-09 14:06
+ * mybatis:
+ *   optimizer:
+ *     enabled: true
+ *     sampling-rate: 0.3
+ *     async-analysis: true
+ *     threshold-millis: 50
+ *     analyze-select: true
+ *     analyze-where: true
+ *     analyze-join: true
+ *     explain-all: true
+ */
 @Setter
 @Getter
 @ConfigurationProperties(prefix = "mybatis.optimizer")
@@ -15,5 +30,13 @@ public class SqlOptimizerProperties {
     private boolean suggestIndex = true;
     private boolean analyzeJoins = true;
     private boolean analyzeWhereClauses = true;
+
+    private boolean analyzeSelect = true;
+    private boolean analyzeWhere = true;
+    private boolean analyzeJoin = true;
+    private double samplingRate = 0.2;
+    private boolean asyncAnalysis = true;
+    private int asyncThreads = 2;
+    private int asyncQueueSize = 1000;
 
 }
