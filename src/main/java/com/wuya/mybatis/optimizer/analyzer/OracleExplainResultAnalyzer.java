@@ -2,6 +2,7 @@ package com.wuya.mybatis.optimizer.analyzer;
 
 import com.wuya.mybatis.optimizer.SqlAnalysisInterceptor;
 import com.wuya.mybatis.optimizer.SqlExplainResult;
+import org.apache.ibatis.mapping.BoundSql;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +20,9 @@ public class OracleExplainResultAnalyzer implements ExplainResultAnalyzer{
     private static final Logger logger = LoggerFactory.getLogger(OracleExplainResultAnalyzer.class);
 
     @Override
-    public SqlExplainResult analyze(Connection connection, String sql) throws Exception {
+    public SqlExplainResult analyze(Connection connection, BoundSql boundSql) throws Exception {
+        String sql = boundSql.getSql();
+
         SqlExplainResult result = new SqlExplainResult();
         result.setSql(sql);
 

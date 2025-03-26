@@ -2,6 +2,9 @@ package com.wuya.mybatis.optimizer.analyzer;
 
 
 import com.wuya.mybatis.optimizer.SqlExplainResult;
+import com.wuya.mybatis.optimizer.helper.SqlHepler;
+import org.apache.ibatis.mapping.BoundSql;
+import org.apache.ibatis.mapping.ParameterMapping;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,23 +19,47 @@ import java.util.Map;
  */
 public class MysqlExplainResultAnalyzer implements ExplainResultAnalyzer {
     @Override
-    public SqlExplainResult analyze(Connection connection, String sql) throws Exception {
-        SqlExplainResult result = new SqlExplainResult();
-        result.setSql(sql);
+    public SqlExplainResult analyze(Connection connection, BoundSql boundSql) throws Exception {
+        // 获取原始 SQL
+        String originalSql = boundSql.getSql();
 
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("EXPLAIN FORMAT=JSON " + sql)) {
+        // 获取动态参数对象
+        Object parameterObject = boundSql.getParameterObject();
+        // 获取参数映射
+        List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
 
-            List<Map<String, Object>> explainResults = new ArrayList<>();
-            if (rs.next()) {
-                String jsonResult = rs.getString(1);
-                Map<String, Object> row = new LinkedHashMap<>();
-                row.put("EXPLAIN", jsonResult);
-                explainResults.add(row);
+        // 在 SQL 前加上 EXPLAIN
+        String explainSql = "EXPLAIN " + originalSql;
+
+        // 创建 PreparedStatement 执行查询
+        PreparedStatement preparedStatement = connection.prepareStatement(explainSql);
+
+        // 如果参数对象不为 null，设置参数值
+        if (parameterObject != null) {
+            for (int i = 0; i < parameterMappings.size(); i++) {
+                ParameterMapping parameterMapping = parameterMappings.get(i);
+                String propertyName = parameterMapping.getProperty(); // 获取参数名称
+                Object value = SqlHepler.getParameterValue(parameterObject, propertyName); // 获取参数值
+
+                // 将参数值设置到 PreparedStatement 中
+                preparedStatement.setObject(i + 1, value);
             }
-            result.setExplainResults(explainResults);
         }
 
+        // 执行查询并返回结果
+        ResultSet rs = preparedStatement.executeQuery();
+
+        SqlExplainResult result = new SqlExplainResult();
+        result.setSql(originalSql);
+
+        List<Map<String, Object>> explainResults = new ArrayList<>();
+        while (rs.next()) {
+            String jsonResult = rs.getString(1);
+            Map<String, Object> row = new LinkedHashMap<>();
+            row.put("EXPLAIN", jsonResult);
+            explainResults.add(row);
+        }
+        result.setExplainResults(explainResults);
         return result;
     }
 

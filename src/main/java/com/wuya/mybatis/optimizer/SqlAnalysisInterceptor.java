@@ -103,7 +103,7 @@ public class SqlAnalysisInterceptor implements Interceptor, DisposableBean {
                         .filter(a -> a.getDatabaseType() == dbType)
                         .findFirst()
                         .orElseThrow(() -> new IllegalStateException("No analyzer found for database: " + dbType))
-                        .analyze(connection, sql);
+                        .analyze(connection, boundSql);
 
                 explainResult.setExecutionTime(executionTime);
 
