@@ -3,7 +3,7 @@
 # SQL 分析优化 Starter
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![License](https://img.shields.io/badge/license-MIT-blue)
+![License](https://img.shields.io/badge/license-apache%202.0-blue)
 
 一个基于 MyBatis 插件的 SQL 分析优化 Starter，提供 SQL 性能分析、优化建议、多数据库兼容支持，并支持同步/异步分析模式和自定义分析规则。
 
@@ -78,7 +78,7 @@ public class SqlAnalyzerConfig {
 # SQL 分析优化 Starter
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
-![License](https://img.shields.io/badge/license-MIT-blue)
+![License](https://img.shields.io/badge/license-apache%202.0-blue)
 
 一个基于 MyBatis 插件的 SQL 分析优化 Starter，提供 SQL 性能分析、优化建议、多数据库兼容支持，并支持同步/异步分析模式和自定义分析规则。
 
