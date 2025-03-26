@@ -19,7 +19,7 @@ public class IndexAdviceGenerator implements SqlOptimizationAdvice {
             String type = String.valueOf(row.get("type"));
             String key = String.valueOf(row.get("key"));
 
-            if ("ALL".equalsIgnoreCase(type) && key == null) {
+            if ("ALL".equalsIgnoreCase(type) && "null".equals(key)) {
                 adviceList.add("Consider adding an index for full table scan on table: " + row.get("table"));
             } else if ("index".equalsIgnoreCase(type)) {
                 adviceList.add("Full index scan detected on index: " + key + ", consider optimizing query conditions");
