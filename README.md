@@ -74,6 +74,80 @@ public class SqlAnalyzerConfig {
 ### 采样率控制
 
 通过 `sample-rate` 配置采样比例，避免高频 SQL 带来的性能开销：
+# SQL 分析优化 Starter
+
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-blue)
+
+一个基于 MyBatis 插件的 SQL 分析优化 Starter，提供 SQL 性能分析、优化建议、多数据库兼容支持，并支持同步/异步分析模式和自定义分析规则。
+
+## 功能特性
+
+- ✅ **SQL 性能分析** - 自动分析执行的 SQL 语句
+- ✅ **优化建议** - 提供索引、改写等优化建议
+- ✅ **多数据库兼容** - 支持 MySQL、Oracle、PostgreSQL 等主流数据库
+- ✅ **灵活的分析模式** - 支持同步和异步分析模式
+- ✅ **自定义规则** - 可扩展的分析规则配置
+- ✅ **采样率控制** - 避免分析带来的性能开销
+- ✅ **轻量无侵入** - 简单配置即可接入现有项目
+
+## 快速开始
+
+### 1. 添加依赖
+
+```xml
+<dependency>
+    <groupId>com.wuya</groupId>
+    <artifactId>mybatis-sql-optimizer-spring-boot-starter</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+### 2. 基础配置
+
+```yaml
+sql:
+  analyzer:
+    enabled: true # 启用分析器
+    async-mode: true # 使用异步模式
+    sample-rate: 0.5 # 采样率(0-1)
+    rules: # 自定义规则
+      - name: no-index-scan
+        level: WARN
+      - name: full-table-scan
+        level: ERROR
+```
+
+### 3. 高级配置
+
+```java
+@Configuration
+public class SqlAnalyzerConfig {
+    
+    @Bean
+    public SqlAnalysisRuleCustomizer ruleCustomizer() {
+        return rules -> {
+            rules.add(new CustomRule()); // 添加自定义规则
+        };
+    }
+    
+    @Bean
+    public SqlAnalysisReporter analysisReporter() {
+        return new CustomReporter(); // 自定义报告处理器
+    }
+}
+```
+
+## 功能详解
+
+### 分析模式
+
+- **同步模式**：立即分析并返回结果，适合开发环境
+- **异步模式**：后台线程池处理，不影响主流程，适合生产环境
+
+### 采样率控制
+
+通过 `sample-rate` 配置采样比例，避免高频 SQL 带来的性能开销：
 
 ```yaml
 sql:
