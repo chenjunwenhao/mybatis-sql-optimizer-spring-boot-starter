@@ -1,6 +1,7 @@
 package com.wuya.mybatis.optimizer.analyzer;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wuya.mybatis.optimizer.SqlExplainResult;
 import com.wuya.mybatis.optimizer.helper.SqlHepler;
