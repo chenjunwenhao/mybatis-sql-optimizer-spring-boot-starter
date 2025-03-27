@@ -1,8 +1,8 @@
 package com.wuya.mybatis.autoconfigure;
 
 import com.wuya.mybatis.optimizer.*;
-import com.wuya.mybatis.optimizer.advice.IndexAdviceGenerator;
 import com.wuya.mybatis.optimizer.advice.JoinAdviceGenerator;
+import com.wuya.mybatis.optimizer.advice.MySqlAdviceGenerator;
 import com.wuya.mybatis.optimizer.advice.WhereClauseAdviceGenerator;
 import com.wuya.mybatis.optimizer.analyzer.ExplainResultAnalyzer;
 import com.wuya.mybatis.optimizer.analyzer.MysqlExplainResultAnalyzer;
@@ -68,8 +68,8 @@ public class MybatisSqlOptimizerAutoConfiguration {
     // 注册规则分析器
     @Bean
     @ConditionalOnProperty(name = "mybatis.optimizer.analyze-select", matchIfMissing = true)
-    public IndexAdviceGenerator selectRuleAnalyzer() {
-        return new IndexAdviceGenerator();
+    public MySqlAdviceGenerator selectRuleAnalyzer() {
+        return new MySqlAdviceGenerator();
     }
 
     @Bean

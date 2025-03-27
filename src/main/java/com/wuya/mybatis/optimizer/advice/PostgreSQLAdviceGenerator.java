@@ -41,7 +41,7 @@ public class PostgreSQLAdviceGenerator implements SqlOptimizationAdvice {
         }
 
         // 执行时间分析
-        if (result.getExecutionTime() != null && result.getPlanningTime() != null &&
+        if (result.getExecutionTime() != 0 && result.getPlanningTime() != null &&
                 result.getExecutionTime() > 0 &&
                 result.getPlanningTime() > result.getExecutionTime() * 0.2) {
             adviceList.add("计划时间占比较高(计划时间/执行时间=" +
