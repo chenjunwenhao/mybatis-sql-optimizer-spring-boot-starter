@@ -33,7 +33,7 @@ import java.util.List;
 public class MybatisSqlOptimizerAutoConfiguration {
 
     @Bean
-    @ConditionalOnMissingBean
+    @ConditionalOnProperty(name = "mybatis.optimizer.default-report", matchIfMissing = true)
     public SqlAnalysisReporter sqlAnalysisReporter() {
         return new DefaultAnalysisReporter();
     }
