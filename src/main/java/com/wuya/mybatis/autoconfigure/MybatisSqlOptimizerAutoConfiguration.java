@@ -8,7 +8,7 @@ import com.wuya.mybatis.optimizer.analyzer.ExplainResultAnalyzer;
 import com.wuya.mybatis.optimizer.analyzer.MysqlExplainResultAnalyzer;
 import com.wuya.mybatis.optimizer.analyzer.OracleExplainResultAnalyzer;
 import com.wuya.mybatis.optimizer.analyzer.PostgreExplainResultAnalyzer;
-import com.wuya.mybatis.optimizer.output.DefaultAnalysisReporter;
+import com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;

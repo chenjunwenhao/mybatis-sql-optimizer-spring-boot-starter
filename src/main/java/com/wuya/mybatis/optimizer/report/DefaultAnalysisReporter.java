@@ -1,5 +1,7 @@
-package com.wuya.mybatis.optimizer;
+package com.wuya.mybatis.optimizer.report;
 
+import com.wuya.mybatis.optimizer.SqlAnalysisReporter;
+import com.wuya.mybatis.optimizer.SqlExplainResult;
 import com.wuya.mybatis.optimizer.analyzer.DatabaseType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
