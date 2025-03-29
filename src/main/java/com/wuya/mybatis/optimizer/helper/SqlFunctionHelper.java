@@ -41,10 +41,7 @@ public class SqlFunctionHelper {
             @Override
             public void visit(Function function) {
                 // 1. 跳过白名单函数
-                if (whereFunctionAllowed
-                        .stream()
-                        .map(String::toUpperCase)
-                        .anyMatch(func -> func.contains(function.getName().toUpperCase()))) {
+                if (whereFunctionAllowed.contains(function.getName().toUpperCase())) {
                     return;
                 }
                 // 2. 检测是否作用于列

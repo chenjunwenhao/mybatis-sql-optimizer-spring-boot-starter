@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 配置属性类
@@ -53,4 +54,15 @@ public class SqlOptimizerProperties {
     private Set<String> whereFunctionAllowed = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             "ABS", "ROUND", "FLOOR", "CEILING", "COALESCE", "NULLIF"
     )));;
+
+
+    // 返回大写不可变 Set
+    public Set<String> getAllowedFunctionsUpper() {
+        return whereFunctionAllowed.stream()
+                .map(String::toUpperCase)
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toSet(),
+                        Collections::unmodifiableSet
+                ));
+    }
 }

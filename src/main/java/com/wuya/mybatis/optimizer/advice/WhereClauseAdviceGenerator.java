@@ -4,6 +4,7 @@ import com.wuya.mybatis.optimizer.SqlExplainResult;
 import com.wuya.mybatis.optimizer.SqlOptimizationAdvice;
 import com.wuya.mybatis.optimizer.SqlOptimizerProperties;
 import com.wuya.mybatis.optimizer.analyzer.DatabaseType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -16,9 +17,12 @@ import static com.wuya.mybatis.optimizer.helper.SqlFunctionHelper.audit;
 @Component
 public class WhereClauseAdviceGenerator implements SqlOptimizationAdvice {
 
-    @Resource
-    private SqlOptimizerProperties properties;
+    private final Set<String> allowedFunctionsUpper;
 
+    @Autowired
+    public WhereClauseAdviceGenerator(SqlOptimizerProperties properties) {
+        this.allowedFunctionsUpper = properties.getAllowedFunctionsUpper();
+    }
     @Override
     public List<String> generateAdvice(SqlExplainResult explainResult) {
         List<String> adviceList = new ArrayList<>();
@@ -30,8 +34,7 @@ public class WhereClauseAdviceGenerator implements SqlOptimizationAdvice {
 
         // WHERE条件中使用函数，可能导致索引失效
         try {
-            Set<String> whereFunctionAllowed = properties.getWhereFunctionAllowed();
-            List<String> audit = audit(sql,whereFunctionAllowed);
+            List<String> audit = audit(sql, allowedFunctionsUpper);
             adviceList.addAll(audit);
         } catch (Exception e) {
             throw new RuntimeException("jsqlparser SQL分析失败", e);
