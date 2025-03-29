@@ -10,7 +10,16 @@ import java.util.List;
  * @date 2019-08-01
  */
 public interface SqlOptimizationAdvice {
+    /**
+     * 生成优化建议
+     * @param explainResult
+     * @return
+     */
     List<String> generateAdvice(SqlExplainResult explainResult);
-
+    /**
+     * 是否支持该数据库类型
+     * @param dbType
+     * @return
+     */
     boolean supports(DatabaseType dbType);
 }
