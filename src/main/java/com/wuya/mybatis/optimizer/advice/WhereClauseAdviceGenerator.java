@@ -2,15 +2,22 @@ package com.wuya.mybatis.optimizer.advice;
 
 import com.wuya.mybatis.optimizer.SqlExplainResult;
 import com.wuya.mybatis.optimizer.SqlOptimizationAdvice;
+import com.wuya.mybatis.optimizer.SqlOptimizerProperties;
 import com.wuya.mybatis.optimizer.analyzer.DatabaseType;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
+import java.util.Set;
 
+import static com.wuya.mybatis.optimizer.helper.SqlFunctionHelper.audit;
+
+@Component
 public class WhereClauseAdviceGenerator implements SqlOptimizationAdvice {
-    private static final Pattern FUNCTION_PATTERN =
-            Pattern.compile("(?i)(YEAR\\(|MONTH\\(|DATE\\(|UPPER\\(|LOWER\\()");
+
+    @Resource
+    private SqlOptimizerProperties properties;
 
     @Override
     public List<String> generateAdvice(SqlExplainResult explainResult) {
@@ -21,8 +28,13 @@ public class WhereClauseAdviceGenerator implements SqlOptimizationAdvice {
             adviceList.add("LIKE条件以通配符开头，无法使用索引");
         }
 
-        if (FUNCTION_PATTERN.matcher(sql).find()) {
-            adviceList.add("WHERE条件中使用函数，可能导致索引失效");
+        // WHERE条件中使用函数，可能导致索引失效
+        try {
+            Set<String> whereFunctionAllowed = properties.getWhereFunctionAllowed();
+            List<String> audit = audit(sql,whereFunctionAllowed);
+            adviceList.addAll(audit);
+        } catch (Exception e) {
+            throw new RuntimeException("jsqlparser SQL分析失败", e);
         }
 
         if (sql.matches(".*\\bWHERE\\b.*\\bOR\\b.*")) {

@@ -38,7 +38,12 @@
             <version>2.2.2</version>
             <optional>true</optional>
         </dependency>
-
+        <!-- JSqlParser 核心库 -->
+        <dependency>
+            <groupId>com.github.jsqlparser</groupId>
+            <artifactId>jsqlparser</artifactId>
+            <version>4.9</version> <!-- 使用最新版本 -->
+        </dependency>
         <!-- Lombok for reducing boilerplate code -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -52,6 +57,7 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
+        <!-- For jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
