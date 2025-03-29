@@ -8,6 +8,7 @@ import com.wuya.mybatis.optimizer.analyzer.ExplainResultAnalyzer;
 import com.wuya.mybatis.optimizer.analyzer.MysqlExplainResultAnalyzer;
 import com.wuya.mybatis.optimizer.analyzer.OracleExplainResultAnalyzer;
 import com.wuya.mybatis.optimizer.analyzer.PostgreExplainResultAnalyzer;
+import com.wuya.mybatis.optimizer.output.DefaultAnalysisReporter;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
@@ -44,8 +45,8 @@ public class MybatisSqlOptimizerAutoConfiguration {
             List<ExplainResultAnalyzer> analyzers,
             List<SqlOptimizationAdvice> adviceGenerators,
             DataSource dataSource,
-            SqlAnalysisReporter reporter) {
-        return new SqlAnalysisInterceptor(properties, analyzers, adviceGenerators, dataSource, reporter);
+            List<SqlAnalysisReporter> reporters) {
+        return new SqlAnalysisInterceptor(properties, analyzers, adviceGenerators, dataSource, reporters);
     }
 
 
