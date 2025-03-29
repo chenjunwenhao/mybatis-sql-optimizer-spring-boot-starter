@@ -5,16 +5,13 @@ import com.wuya.mybatis.optimizer.SqlOptimizationAdvice;
 import com.wuya.mybatis.optimizer.SqlOptimizerProperties;
 import com.wuya.mybatis.optimizer.analyzer.DatabaseType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import static com.wuya.mybatis.optimizer.helper.SqlFunctionHelper.audit;
 
-@Component
 public class WhereClauseAdviceGenerator implements SqlOptimizationAdvice {
 
     private final Set<String> allowedFunctionsUpper;

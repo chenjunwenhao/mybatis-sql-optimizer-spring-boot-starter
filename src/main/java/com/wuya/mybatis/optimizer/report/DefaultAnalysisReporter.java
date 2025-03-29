@@ -5,9 +5,7 @@ import com.wuya.mybatis.optimizer.SqlExplainResult;
 import com.wuya.mybatis.optimizer.analyzer.DatabaseType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
-@Component
 public class DefaultAnalysisReporter implements SqlAnalysisReporter {
     private static final Logger logger = LoggerFactory.getLogger(DefaultAnalysisReporter.class);
 

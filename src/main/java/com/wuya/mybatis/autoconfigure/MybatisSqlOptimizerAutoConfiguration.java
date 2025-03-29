@@ -1,9 +1,10 @@
 package com.wuya.mybatis.autoconfigure;
 
-import com.wuya.mybatis.optimizer.*;
-import com.wuya.mybatis.optimizer.advice.JoinAdviceGenerator;
-import com.wuya.mybatis.optimizer.advice.MySqlAdviceGenerator;
-import com.wuya.mybatis.optimizer.advice.WhereClauseAdviceGenerator;
+import com.wuya.mybatis.optimizer.SqlAnalysisInterceptor;
+import com.wuya.mybatis.optimizer.SqlAnalysisReporter;
+import com.wuya.mybatis.optimizer.SqlOptimizationAdvice;
+import com.wuya.mybatis.optimizer.SqlOptimizerProperties;
+import com.wuya.mybatis.optimizer.advice.*;
 import com.wuya.mybatis.optimizer.analyzer.ExplainResultAnalyzer;
 import com.wuya.mybatis.optimizer.analyzer.MysqlExplainResultAnalyzer;
 import com.wuya.mybatis.optimizer.analyzer.OracleExplainResultAnalyzer;
@@ -16,7 +17,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -68,20 +68,35 @@ public class MybatisSqlOptimizerAutoConfiguration {
 
     // 注册规则分析器
     @Bean
-    @ConditionalOnProperty(name = "mybatis.optimizer.analyze-select", matchIfMissing = true)
-    public MySqlAdviceGenerator selectRuleAnalyzer() {
+    @ConditionalOnProperty(name = "mybatis.optimizer.mysql-index", matchIfMissing = true)
+    public MySqlAdviceGenerator mySqlAdviceGenerator() {
         return new MySqlAdviceGenerator();
+    }
+    @Bean
+    @ConditionalOnProperty(name = "mybatis.optimizer.postgre-index", matchIfMissing = true)
+    public PostgreSQLAdviceGenerator postgreSQLAdviceGenerator() {
+        return new PostgreSQLAdviceGenerator();
+    }
+    @Bean
+    @ConditionalOnProperty(name = "mybatis.optimizer.analyze-select", matchIfMissing = true)
+    public SelectAdviceGenerator selectAdviceGenerator() {
+        return new SelectAdviceGenerator();
+    }
+    @Bean
+    @ConditionalOnProperty(name = "mybatis.optimizer.analyze-common", matchIfMissing = true)
+    public CommonAdviceGenerator commonAdviceGenerator() {
+        return new CommonAdviceGenerator();
     }
 
     @Bean
     @ConditionalOnProperty(name = "mybatis.optimizer.analyze-where", matchIfMissing = true)
-    public WhereClauseAdviceGenerator whereRuleAnalyzer() {
-        return new WhereClauseAdviceGenerator();
+    public WhereClauseAdviceGenerator whereClauseAdviceGenerator(SqlOptimizerProperties properties) {
+        return new WhereClauseAdviceGenerator(properties);
     }
 
     @Bean
     @ConditionalOnProperty(name = "mybatis.optimizer.analyze-join", matchIfMissing = true)
-    public JoinAdviceGenerator joinRuleAnalyzer() {
+    public JoinAdviceGenerator joinAdviceGenerator() {
         return new JoinAdviceGenerator();
     }
 

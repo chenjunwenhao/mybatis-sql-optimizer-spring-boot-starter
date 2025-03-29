@@ -1,6 +1,5 @@
 package com.wuya.mybatis.optimizer.analyzer;
 
-import com.wuya.mybatis.optimizer.SqlAnalysisInterceptor;
 import com.wuya.mybatis.optimizer.SqlExplainResult;
 import org.apache.ibatis.mapping.BoundSql;
 import org.slf4j.Logger;

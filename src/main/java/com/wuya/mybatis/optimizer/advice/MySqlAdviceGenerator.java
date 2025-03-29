@@ -3,13 +3,11 @@ package com.wuya.mybatis.optimizer.advice;
 import com.wuya.mybatis.optimizer.SqlExplainResult;
 import com.wuya.mybatis.optimizer.SqlOptimizationAdvice;
 import com.wuya.mybatis.optimizer.analyzer.DatabaseType;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Component
 public class MySqlAdviceGenerator implements SqlOptimizationAdvice {
     @Override
     public List<String> generateAdvice(SqlExplainResult explainResult) {

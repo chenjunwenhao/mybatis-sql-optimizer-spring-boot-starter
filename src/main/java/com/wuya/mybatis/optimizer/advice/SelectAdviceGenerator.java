@@ -3,7 +3,6 @@ package com.wuya.mybatis.optimizer.advice;
 import com.wuya.mybatis.optimizer.SqlExplainResult;
 import com.wuya.mybatis.optimizer.SqlOptimizationAdvice;
 import com.wuya.mybatis.optimizer.analyzer.DatabaseType;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.List;
  * @author wuya
  * @date 2020-08-01 15:07
  */
-@Component
 public class SelectAdviceGenerator implements SqlOptimizationAdvice {
     @Override
     public List<String> generateAdvice(SqlExplainResult explainResult) {

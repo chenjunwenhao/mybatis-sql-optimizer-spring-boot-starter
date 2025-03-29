@@ -15,9 +15,9 @@ import org.springframework.beans.factory.DisposableBean;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
