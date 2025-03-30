@@ -55,8 +55,8 @@ public class SqlAnalysisInterceptor implements Interceptor, DisposableBean {
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         if (!properties.isEnabled() ||
-                (properties.getSamplingRate() < 1.0 &&
-                        ThreadLocalRandom.current().nextDouble() >= properties.getSamplingRate())) {
+                (properties.getSampleRate() < 1.0 &&
+                        ThreadLocalRandom.current().nextDouble() >= properties.getSampleRate())) {
             return invocation.proceed();
         }
 

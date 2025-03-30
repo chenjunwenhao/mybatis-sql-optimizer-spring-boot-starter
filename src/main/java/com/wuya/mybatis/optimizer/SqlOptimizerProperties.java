@@ -37,16 +37,19 @@ import java.util.stream.Collectors;
 public class SqlOptimizerProperties {
     // getters and setters
     private boolean enabled = true;
-    private boolean explainAll = false; // 是否解释所有SQL
+    private boolean explainAll = true; // 是否解释所有SQL
     private long thresholdMillis = 100; // 超过此阈值的SQL才会被分析
-    private boolean suggestIndex = true;
-    private boolean analyzeJoins = true;
-    private boolean analyzeWhereClauses = true;
 
+    private boolean mysqlIndex = true;
+    private boolean postgreIndex = true;
+    private boolean analyzeWhereClauses = true;
     private boolean analyzeSelect = true;
     private boolean analyzeWhere = true;
     private boolean analyzeJoin = true;
-    private double samplingRate = 0.2;
+    private boolean analyzeCommon = true;
+
+    private double sampleRate = 1;
+
     private boolean asyncAnalysis = true;
     private int asyncThreads = 2;
     private int asyncQueueSize = 1000;
