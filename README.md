@@ -24,9 +24,9 @@
 
 ```xml
 <dependency>
-    <groupId>com.wuya</groupId>
+    <groupId>io.github.chenjunwenhao</groupId>
     <artifactId>sql-analyzer-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.2.4</version>
 </dependency>
 ```
 
