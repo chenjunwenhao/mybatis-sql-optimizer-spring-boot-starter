@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * 优化建议接口
- * @author wuya
+ * @author chenjunwen
  * @date 2019-08-01
  */
 public interface SqlOptimizationAdvice {

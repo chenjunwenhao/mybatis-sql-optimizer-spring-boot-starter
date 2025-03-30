@@ -11,10 +11,18 @@ import java.util.Map;
 
 /**
  * sql 语句帮助类
- * @author wuya
+ * @author chenjunwen
  * @date 2023-08-09 16:08
  */
 public class SqlHepler {
+    
+    /**
+     * 从参数对象中获取指定名称的参数值
+     * 
+     * @param parameterObject 参数对象，可以是普通对象或 Map
+     * @param propertyName 参数名称
+     * @return 参数值
+     */
     public static Object getParameterValue(Object parameterObject, String propertyName) {
         if (parameterObject instanceof Map) {
             Map<?, ?> paramMap = (Map<?, ?>) parameterObject;
@@ -31,6 +39,12 @@ public class SqlHepler {
         return null;
     }
 
+    /**
+     * 将字符串的首字母大写
+     * 
+     * @param str 输入字符串
+     * @return 首字母大写后的字符串
+     */
     public static String capitalize(String str) {
         if (str == null || str.length() == 0) {
             return str;
@@ -38,6 +52,15 @@ public class SqlHepler {
         return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
+    /**
+     * 执行 SQL 语句并返回结果集
+     * 
+     * @param connection 数据库连接对象
+     * @param boundSql 包含 SQL 语句和参数映射的对象
+     * @param explainPre SQL 语句前缀，用于添加 EXPLAIN 等关键字
+     * @return SQL 执行结果集
+     * @throws Exception 数据库操作可能抛出的异常
+     */
     public static ResultSet getResult(Connection connection, BoundSql boundSql, String explainPre)  throws Exception {
         // 获取原始 SQL
         String originalSql = boundSql.getSql();

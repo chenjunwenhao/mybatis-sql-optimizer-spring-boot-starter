@@ -1,6 +1,5 @@
 package com.wuya.mybatis.optimizer.analyzer;
 
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wuya.mybatis.optimizer.SqlExplainResult;
@@ -16,10 +15,17 @@ import java.util.Map;
 
 /**
  * PostgreSQL分析器实现
- * @author wuya
+ * @author chenjunwen
  * @date 2020-08-05 16:09
  */
 public class PostgreExplainResultAnalyzer implements ExplainResultAnalyzer {
+    /**
+     * 分析SQL执行计划
+     * @param connection 数据库连接
+     * @param boundSql MyBatis的BoundSql对象，包含SQL语句和参数
+     * @return SqlExplainResult对象，包含分析结果
+     * @throws Exception 执行SQL或解析结果时可能抛出的异常
+     */
     @Override
     public SqlExplainResult analyze(Connection connection, BoundSql boundSql) throws Exception {
         String originalSql = boundSql.getSql();
@@ -49,13 +55,22 @@ public class PostgreExplainResultAnalyzer implements ExplainResultAnalyzer {
         return result;
     }
 
+    /**
+     * 获取数据库类型
+     * @return DatabaseType枚举值，表示支持的数据库类型
+     */
     @Override
     public DatabaseType getDatabaseType() {
         return DatabaseType.POSTGRE;
     }
 
 
-    // 解析JSON格式的EXPLAIN输出
+    /**
+     * 解析JSON格式的EXPLAIN输出
+     * @param jsonResult JSON格式的EXPLAIN结果字符串
+     * @return 解析后的Map对象，包含执行计划信息
+     * @throws Exception 解析JSON时可能抛出的异常
+     */
     private Map<String, Object> parseExplainJson(String jsonResult) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> planMap = mapper.readValue(jsonResult, new TypeReference<Map<String, Object>>() {});
@@ -68,7 +83,11 @@ public class PostgreExplainResultAnalyzer implements ExplainResultAnalyzer {
     }
 
 
-    // 扁平化处理计划树结构
+    /**
+     * 扁平化处理计划树结构
+     * @param planNode 当前计划节点对象
+     * @return 扁平化后的计划节点列表
+     */
     private List<Map<String, Object>> flattenPlanTree(Object planNode) {
         List<Map<String, Object>> result = new ArrayList<>();
         if (planNode instanceof Map) {

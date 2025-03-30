@@ -49,7 +49,7 @@ public class SqlAnalysisInterceptor implements Interceptor, DisposableBean {
         this.dataSource = dataSource;
         this.reporters = reporters;
         this.asyncExecutor = properties.isAsyncAnalysis() ?
-                new AsyncSqlAnalysisExecutor(properties.getAsyncThreads()) : null;
+                new AsyncSqlAnalysisExecutor(properties.getAsyncThreads(),properties.getAsyncQueueSize()) : null;
     }
 
     @Override

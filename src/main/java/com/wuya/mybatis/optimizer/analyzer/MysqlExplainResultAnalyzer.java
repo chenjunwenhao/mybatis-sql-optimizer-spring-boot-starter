@@ -14,10 +14,18 @@ import java.util.Map;
 
 /**
  * MySQL分析器实现
+ * 该类用于解析MySQL数据库中SQL语句的执行计划
  * @author wuya
  * @date 2020-06-09 16:09
  */
 public class MysqlExplainResultAnalyzer implements ExplainResultAnalyzer {
+    /**
+     * 分析SQL语句的执行计划
+     * @param connection 数据库连接对象，用于执行SQL语句
+     * @param boundSql 包含SQL语句和参数信息的对象
+     * @return 返回包含原始SQL和执行计划解析结果的对象
+     * @throws Exception 执行过程中可能抛出的异常
+     */
     @Override
     public SqlExplainResult analyze(Connection connection, BoundSql boundSql) throws Exception {
         // 获取原始 SQL
@@ -49,9 +57,11 @@ public class MysqlExplainResultAnalyzer implements ExplainResultAnalyzer {
         // 执行查询并返回结果
         ResultSet rs = preparedStatement.executeQuery();
 
+        // 创建并填充SQL执行结果对象
         SqlExplainResult result = new SqlExplainResult();
         result.setSql(originalSql);
 
+        // 解析并存储执行计划的结果
         List<Map<String, Object>> explainResults = new ArrayList<>();
         ResultSetMetaData metaData = rs.getMetaData();
         int colCount = metaData.getColumnCount();
@@ -73,6 +83,10 @@ public class MysqlExplainResultAnalyzer implements ExplainResultAnalyzer {
         return result;
     }
 
+    /**
+     * 获取数据库类型
+     * @return 返回数据库类型为MySQL
+     */
     @Override
     public DatabaseType getDatabaseType() {
         return DatabaseType.MYSQL;

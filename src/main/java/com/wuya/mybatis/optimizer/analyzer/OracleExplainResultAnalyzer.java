@@ -14,14 +14,30 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Oracle数据库执行计划分析器
+ * 该类实现了ExplainResultAnalyzer接口，用于分析Oracle数据库的SQL执行计划
+ * @author chenjunwen
+ * @date 2023-07-07
+ */
 public class OracleExplainResultAnalyzer implements ExplainResultAnalyzer{
 
     private static final Logger logger = LoggerFactory.getLogger(OracleExplainResultAnalyzer.class);
 
+    /**
+     * 分析SQL语句的执行计划
+     * 
+     * @param connection 数据库连接对象，用于执行SQL语句
+     * @param boundSql 包含SQL语句的信息
+     * @return SqlExplainResult对象，包含分析结果
+     * @throws Exception 如果分析过程中发生错误，则抛出异常
+     */
     @Override
     public SqlExplainResult analyze(Connection connection, BoundSql boundSql) throws Exception {
+        // 获取SQL语句
         String sql = boundSql.getSql();
 
+        // 创建SqlExplainResult对象，用于存储分析结果
         SqlExplainResult result = new SqlExplainResult();
         result.setSql(sql);
 
@@ -59,6 +75,11 @@ public class OracleExplainResultAnalyzer implements ExplainResultAnalyzer{
         return result;
     }
 
+    /**
+     * 获取数据库类型
+     * 
+     * @return DatabaseType 枚举值，表示Oracle数据库
+     */
     @Override
     public DatabaseType getDatabaseType() {
         return DatabaseType.ORACLE;
