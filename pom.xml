@@ -11,6 +11,7 @@
 
     <name>MyBatis SQL Optimizer Starter</name>
     <description>Spring Boot Starter for MyBatis SQL analysis and optimization</description>
+    <url>https://github.com/chenjunwenhao/mybatis-sql-optimizer-spring-boot-starter</url>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
