@@ -56,7 +56,6 @@ public class MybatisSqlOptimizerAutoConfiguration {
      * @param properties SQL优化属性
      * @param analyzers 解释结果分析器列表
      * @param adviceGenerators SQL优化建议生成器列表
-     * @param dataSource 数据源
      * @param reporters SQL分析报告器列表
      * @return SQL分析拦截器实例
      */
@@ -66,9 +65,8 @@ public class MybatisSqlOptimizerAutoConfiguration {
             SqlOptimizerProperties properties,
             List<ExplainResultAnalyzer> analyzers,
             List<SqlOptimizationAdvice> adviceGenerators,
-            DataSource dataSource,
             List<SqlAnalysisReporter> reporters) {
-        return new SqlAnalysisInterceptor(properties, analyzers, adviceGenerators, dataSource, reporters);
+        return new SqlAnalysisInterceptor(properties, analyzers, adviceGenerators, reporters);
     }
 
     /**

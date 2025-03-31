@@ -33,7 +33,6 @@ public class SqlAnalysisInterceptor implements Interceptor, DisposableBean {
     private final SqlOptimizerProperties properties;
     private final List<ExplainResultAnalyzer> analyzers;
     private final List<SqlOptimizationAdvice> adviceGenerators;
-    private final DataSource dataSource;
     private final List<SqlAnalysisReporter> reporters;
     private final AsyncSqlAnalysisExecutor asyncExecutor;
     private static final Logger logger = LoggerFactory.getLogger(SqlAnalysisInterceptor.class);
@@ -41,12 +40,10 @@ public class SqlAnalysisInterceptor implements Interceptor, DisposableBean {
     public SqlAnalysisInterceptor(SqlOptimizerProperties properties,
                                   List<ExplainResultAnalyzer> analyzers,
                                   List<SqlOptimizationAdvice> adviceGenerators,
-                                  DataSource dataSource,
                                   List<SqlAnalysisReporter> reporters) {
         this.properties = properties;
         this.analyzers = analyzers;
         this.adviceGenerators = adviceGenerators != null ? adviceGenerators : Collections.emptyList();
-        this.dataSource = dataSource;
         this.reporters = reporters;
         this.asyncExecutor = properties.isAsyncAnalysis() ?
                 new AsyncSqlAnalysisExecutor(properties.getAsyncThreads(),properties.getAsyncQueueSize()) : null;
@@ -79,7 +76,10 @@ public class SqlAnalysisInterceptor implements Interceptor, DisposableBean {
         BoundSql boundSql = mappedStatement.getBoundSql(parameter);
         String sql = boundSql.getSql();
         Runnable analysisTask = () -> {
-            try (Connection connection = dataSource.getConnection()) {
+            try (Connection connection = mappedStatement.getConfiguration()
+                    .getEnvironment()
+                    .getDataSource()
+                    .getConnection()) {
                 DatabaseType dbType = DatabaseType.fromUrl(connection.getMetaData().getURL());
                 SqlExplainResult explainResult = analyzers.stream()
                         .filter(a -> a.getDatabaseType() == dbType)
