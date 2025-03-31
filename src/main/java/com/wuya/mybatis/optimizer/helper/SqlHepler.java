@@ -24,6 +24,17 @@ public class SqlHepler {
      * @return 参数值
      */
     public static Object getParameterValue(Object parameterObject, String propertyName) {
+
+        if (parameterObject == null || propertyName == null || propertyName.isEmpty()) {
+            return null;
+        }
+
+        // 1. 处理基本类型和String
+        if (isBasicTypeOrWrapper(parameterObject)) {
+            return parameterObject;
+        }
+
+        // 2. 处理 Map
         if (parameterObject instanceof Map) {
             Map<?, ?> paramMap = (Map<?, ?>) parameterObject;
             return paramMap.get(propertyName);
@@ -39,6 +50,20 @@ public class SqlHepler {
         return null;
     }
 
+    /**
+     *  判断对象是否为基本类型、包装类型、String、Number、Boolean、Character、Enum之一
+     * @param obj
+     * @return
+     */
+    private static boolean isBasicTypeOrWrapper(Object obj) {
+        Class<?> clazz = obj.getClass();
+        return clazz.isPrimitive()
+                || obj instanceof String
+                || obj instanceof Number
+                || obj instanceof Boolean
+                || obj instanceof Character
+                || obj instanceof Enum;
+    }
     /**
      * 将字符串的首字母大写
      * 
