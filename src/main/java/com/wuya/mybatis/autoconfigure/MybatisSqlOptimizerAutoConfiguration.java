@@ -13,6 +13,8 @@ import com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -39,6 +41,8 @@ import java.util.List;
 @ConditionalOnProperty(prefix = "mybatis.optimizer", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class MybatisSqlOptimizerAutoConfiguration {
 
+    private static final Logger log = LoggerFactory.getLogger(MybatisSqlOptimizerAutoConfiguration.class);
+
     /**
      * 注册默认的SQL分析报告器
      * 
@@ -47,6 +51,7 @@ public class MybatisSqlOptimizerAutoConfiguration {
     @Bean
     @ConditionalOnProperty(name = "mybatis.optimizer.default-report", matchIfMissing = true)
     public SqlAnalysisReporter sqlAnalysisReporter() {
+        log.info("[mybatisOptimizer] 发现 mybatis.optimizer.default-report:true 加载默认分析输出Bean...");
         return new DefaultAnalysisReporter();
     }
 
@@ -79,13 +84,16 @@ public class MybatisSqlOptimizerAutoConfiguration {
     @Bean
     @ConditionalOnBean(SqlSessionFactory.class)
     public InitializingBean forceAutoConfiguration(List<SqlSessionFactory> sqlSessionFactories,
-                                                   SqlAnalysisInterceptor interceptor) {
+                                                   SqlAnalysisInterceptor interceptor,
+                                                    SqlOptimizerProperties sqlOptimizerProperties) {
+        boolean enabled = sqlOptimizerProperties.isEnabled();
         return () -> {
             for (SqlSessionFactory sqlSessionFactory : sqlSessionFactories) {
                 org.apache.ibatis.session.Configuration configuration = sqlSessionFactory.getConfiguration();
                 boolean alreadyAdded = configuration.getInterceptors().stream()
                         .anyMatch(existing -> existing.getClass().equals(interceptor.getClass()));
-                if (!alreadyAdded) {
+                if (!alreadyAdded && enabled) {
+                    log.info("[mybatisOptimizer] 发现 mybatis.optimizer.enable:true 启动mybatisOptimizer...");
                     configuration.addInterceptor(interceptor);
                 }
             }
