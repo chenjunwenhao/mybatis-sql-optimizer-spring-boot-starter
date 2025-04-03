@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static com.wuya.mybatis.optimizer.helper.SqlHepler.prepareSql;
+
 /**
  * SqlFunctionHelper 是用于审计 SQL 语句中函数使用情况的辅助类。
  * 它主要检查 SQL 语句中是否使用了不在白名单内的函数，特别是那些可能影响列上索引性能的函数。
@@ -33,6 +35,7 @@ public class SqlFunctionHelper {
      */
     public static List<String> audit(String sql, Set<String> whereFunctionAllowed) throws Exception {
         List<String> warnings = new ArrayList<>();
+        sql = prepareSql(sql);
         Statement stmt = CCJSqlParserUtil.parse(sql);
 
         stmt.accept(new StatementVisitorAdapter() {

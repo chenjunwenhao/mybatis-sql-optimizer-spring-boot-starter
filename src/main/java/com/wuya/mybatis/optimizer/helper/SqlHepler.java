@@ -125,4 +125,18 @@ public class SqlHepler {
         // 示例：只分析SELECT语句
         return sql.startsWith("SELECT") && !sql.contains("EXPLAIN");
     }
+
+    /**
+     *  去除注释和压缩 SQL
+     *  CCJSqlParserUtil.parse(sql) 解决 CCJSqlParserException sql解析问题
+     * @param rawSql
+     * @return
+     */
+    public static String prepareSql(String rawSql) {
+        return rawSql.replaceAll("/\\*.*?\\*/", "")  // 移除注释
+                .replaceAll("--.*?\n", " ")    // 移除行注释
+                .replaceAll("(?m)^\\s+", "")   // 移除行首空白
+                .replaceAll("\\s+", " ")       // 压缩空白
+                .trim();
+    }
 }
