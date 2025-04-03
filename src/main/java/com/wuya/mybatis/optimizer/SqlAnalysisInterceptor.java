@@ -21,6 +21,8 @@ import java.util.Properties;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
+import static com.wuya.mybatis.optimizer.helper.SqlHepler.shouldExplain;
+
 @Intercepts({
         @Signature(type = Executor.class, method = "query",
                 args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}),
@@ -75,6 +77,10 @@ public class SqlAnalysisInterceptor implements Interceptor, DisposableBean {
         Object parameter = invocation.getArgs()[1];
         BoundSql boundSql = mappedStatement.getBoundSql(parameter);
         String sql = boundSql.getSql();
+
+        // 判断是否需要执行分析
+        if (!shouldExplain(sql)) return;
+
         Runnable analysisTask = () -> {
             try (Connection connection = mappedStatement.getConfiguration()
                     .getEnvironment()
@@ -85,7 +91,7 @@ public class SqlAnalysisInterceptor implements Interceptor, DisposableBean {
                         .filter(a -> a.getDatabaseType() == dbType)
                         .findFirst()
                         .orElseThrow(() -> new IllegalStateException("No analyzer found for database: " + dbType))
-                        .analyze(connection, boundSql);
+                        .analyze(connection, boundSql,invocation);
 
                 explainResult.setExecutionTime(executionTime);
 
@@ -107,6 +113,7 @@ public class SqlAnalysisInterceptor implements Interceptor, DisposableBean {
             analysisTask.run();
         }
     }
+
     @Override
     public void destroy() throws Exception {
         if (asyncExecutor != null) {

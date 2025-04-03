@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wuya.mybatis.optimizer.SqlExplainResult;
 import com.wuya.mybatis.optimizer.helper.SqlHepler;
 import org.apache.ibatis.mapping.BoundSql;
+import org.apache.ibatis.plugin.Invocation;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -21,13 +22,15 @@ import java.util.Map;
 public class PostgreExplainResultAnalyzer implements ExplainResultAnalyzer {
     /**
      * 分析SQL执行计划
+     *
      * @param connection 数据库连接
-     * @param boundSql MyBatis的BoundSql对象，包含SQL语句和参数
+     * @param boundSql   MyBatis的BoundSql对象，包含SQL语句和参数
+     * @param invocation
      * @return SqlExplainResult对象，包含分析结果
      * @throws Exception 执行SQL或解析结果时可能抛出的异常
      */
     @Override
-    public SqlExplainResult analyze(Connection connection, BoundSql boundSql) throws Exception {
+    public SqlExplainResult analyze(Connection connection, BoundSql boundSql, Invocation invocation) throws Exception {
         String originalSql = boundSql.getSql();
         // 执行查询并返回结果
         ResultSet rs = SqlHepler.getResult(connection, boundSql,"EXPLAIN (ANALYZE, COSTS, VERBOSE, BUFFERS, FORMAT JSON) ");

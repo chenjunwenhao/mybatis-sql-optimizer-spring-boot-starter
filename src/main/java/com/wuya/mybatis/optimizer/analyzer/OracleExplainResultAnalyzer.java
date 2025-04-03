@@ -2,6 +2,7 @@ package com.wuya.mybatis.optimizer.analyzer;
 
 import com.wuya.mybatis.optimizer.SqlExplainResult;
 import org.apache.ibatis.mapping.BoundSql;
+import org.apache.ibatis.plugin.Invocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,14 +27,15 @@ public class OracleExplainResultAnalyzer implements ExplainResultAnalyzer{
 
     /**
      * 分析SQL语句的执行计划
-     * 
+     *
      * @param connection 数据库连接对象，用于执行SQL语句
-     * @param boundSql 包含SQL语句的信息
+     * @param boundSql   包含SQL语句的信息
+     * @param invocation
      * @return SqlExplainResult对象，包含分析结果
      * @throws Exception 如果分析过程中发生错误，则抛出异常
      */
     @Override
-    public SqlExplainResult analyze(Connection connection, BoundSql boundSql) throws Exception {
+    public SqlExplainResult analyze(Connection connection, BoundSql boundSql, Invocation invocation) throws Exception {
         // 获取SQL语句
         String sql = boundSql.getSql();
 

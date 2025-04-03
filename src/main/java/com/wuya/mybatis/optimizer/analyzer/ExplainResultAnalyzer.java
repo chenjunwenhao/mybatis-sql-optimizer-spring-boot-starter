@@ -3,6 +3,7 @@ package com.wuya.mybatis.optimizer.analyzer;
 
 import com.wuya.mybatis.optimizer.SqlExplainResult;
 import org.apache.ibatis.mapping.BoundSql;
+import org.apache.ibatis.plugin.Invocation;
 
 import java.sql.Connection;
 
@@ -16,13 +17,14 @@ import java.sql.Connection;
 public interface ExplainResultAnalyzer {
     /**
      * 分析给定SQL的执行计划
-     * 
+     *
      * @param connection 数据库连接，用于执行SQL和获取数据库信息
-     * @param boundSql 包含执行SQL所需的所有数据的对象
+     * @param boundSql   包含执行SQL所需的所有数据的对象
+     * @param invocation MyBatis的拦截器调用对象，用于获取当前执行的SQL语句
      * @return SqlExplainResult对象，包含SQL的执行计划分析结果
      * @throws Exception 如果分析过程中发生错误，则抛出异常
      */
-    SqlExplainResult analyze(Connection connection, BoundSql boundSql) throws Exception;
+    SqlExplainResult analyze(Connection connection, BoundSql boundSql, Invocation invocation) throws Exception;
     
     /**
      * 获取当前分析器支持的数据库类型

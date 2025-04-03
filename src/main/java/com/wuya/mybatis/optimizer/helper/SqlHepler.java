@@ -115,4 +115,14 @@ public class SqlHepler {
         ResultSet resultSet = preparedStatement.executeQuery();
         return resultSet;
     }
+
+    /**
+     * 只分析 SELECT 语句，并排除已经添加 EXPLAIN 的语句
+     * @param sql
+     * @return
+     */
+    public static boolean shouldExplain(String sql) {
+        // 示例：只分析SELECT语句
+        return sql.startsWith("SELECT") && !sql.contains("EXPLAIN");
+    }
 }
