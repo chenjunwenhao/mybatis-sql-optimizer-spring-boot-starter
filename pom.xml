@@ -6,7 +6,7 @@
 
     <groupId>io.github.chenjunwenhao</groupId>
     <artifactId>mybatis-sql-optimizer-spring-boot-starter</artifactId>
-    <version>1.2.5</version>
+    <version>1.2.6</version>
     <packaging>jar</packaging>
 
     <name>MyBatis SQL Optimizer Starter</name>
@@ -37,19 +37,16 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
         <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
-        <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
 
-        <java.version>1.8</java.version>
         <spring-boot.version>2.7.12</spring-boot.version>
 
         <server.id.value>ossrh</server.id.value>
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     </properties>
     <!-- Spring Boot Parent -->
