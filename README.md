@@ -193,3 +193,6 @@ mybatis:
 ## 许可证
 
 MIT License
+## 欢迎交流加微信
+![8db788e702d354185dec9a25037b722](https://github.com/user-attachments/assets/52cfda16-9454-4f98-b3cf-de2941eb6161)
+
