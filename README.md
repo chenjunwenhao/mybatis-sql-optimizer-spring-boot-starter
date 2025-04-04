@@ -112,7 +112,38 @@ public class CustomReporter implements SqlAnalysisReporter {
 ```
 
 ###  4. 输出样例
-![image](https://github.com/user-attachments/assets/ff14bfec-511d-4dec-a61a-d010f1b01883)
+```java
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -===== SQL分析报告 [MySQL:com.faq.mapper.DictDao.getCity] =====
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -SQL: SELECT
+        think_areas.area_id as id,
+        think_areas.parent_id as parentId,
+        think_areas.area_name as label,
+        think_areas.area_type as type
+        FROM
+        think_areas
+        WHERE
+        think_areas.parent_id = ?
+        and think_areas.area_type like '%1%'
+        or upper(think_areas.area_name) like '%2%'
+        or Upper(think_areas.area_name) like '%2%'
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -执行时间: 625ms
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -执行计划:
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -  filtered: 100.0
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -  Extra: Using where
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -  select_type: SIMPLE
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -  id: 1
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -  type: ALL
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -  rows: 3408
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -  table: think_areas
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -优化建议:
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -  - 检测到全表扫描，建议为表 think_areas 添加索引
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -  - 索引选择性不足，索引 null 过滤了100.0%数据，建议优化索引或查询条件
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -  - LIKE条件以通配符开头，无法使用索引
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -  - 警告: 对列 `AREA_NAME` 使用函数 `UPPER()`，可能导致索引失效。白名单函数: [ABS, FLOOR, COALESCE, CEILING, ROUND, NULLIF]
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -  - 警告: 对列 `AREA_NAME` 使用函数 `UPPER()`，可能导致索引失效。白名单函数: [ABS, FLOOR, COALESCE, CEILING, ROUND, NULLIF]
+2025-04-04 19:53:59 [pool-2-thread-1] INFO  com.wuya.mybatis.optimizer.report.DefaultAnalysisReporter -  - 全表扫描JOIN操作检测到，考虑添加适当的索
+```
+
 ## 功能详解
 
 ### 分析模式
@@ -125,8 +156,8 @@ public class CustomReporter implements SqlAnalysisReporter {
 通过 `sample-rate` 配置采样比例，避免高频 SQL 带来的性能开销：
 
 ```yaml
-sql:
-  analyzer:
+mybatis:
+  optimizer:
     sample-rate: 0.3 # 只分析30%的SQL
 ```
 
