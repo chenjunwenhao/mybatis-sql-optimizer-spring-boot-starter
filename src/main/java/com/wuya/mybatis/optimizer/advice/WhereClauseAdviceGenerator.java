@@ -4,6 +4,8 @@ import com.wuya.mybatis.optimizer.SqlExplainResult;
 import com.wuya.mybatis.optimizer.SqlOptimizationAdvice;
 import com.wuya.mybatis.optimizer.SqlOptimizerProperties;
 import com.wuya.mybatis.optimizer.analyzer.DatabaseType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import static com.wuya.mybatis.optimizer.helper.SqlFunctionHelper.audit;
  */
 public class WhereClauseAdviceGenerator implements SqlOptimizationAdvice {
 
+    private static final Logger logger = LoggerFactory.getLogger(WhereClauseAdviceGenerator.class);
     // 允许在SQL中使用的上层函数集合
     private final Set<String> allowedFunctionsUpper;
 
@@ -54,7 +57,7 @@ public class WhereClauseAdviceGenerator implements SqlOptimizationAdvice {
             List<String> audit = audit(sql, allowedFunctionsUpper);
             adviceList.addAll(audit);
         } catch (Exception e) {
-            throw new RuntimeException("jsqlparser SQL分析失败", e);
+            logger.error("jsqlparser SQL分析失败", e);
         }
 
         // 检查是否存在多个OR条件，如果是，则建议使用UNION ALL优化
