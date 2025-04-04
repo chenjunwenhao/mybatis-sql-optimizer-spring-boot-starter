@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.wuya.mybatis.optimizer.helper.SqlHepler.prepareSql;
+
 /**
  * Limit 规则分析器
  * 该类用于分析SQL语句中的Limit查询，并提供优化建议
@@ -39,6 +41,7 @@ public class LimitAdviceGenerator implements SqlOptimizationAdvice {
         String sql = explainResult.getSql().toUpperCase();
 
         try {
+            sql = prepareSql(sql);
             Statement stmt = CCJSqlParserUtil.parse(sql);
             if (stmt instanceof Select) {
                 Select selectBody = ((Select) stmt).getSelectBody();
