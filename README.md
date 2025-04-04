@@ -37,7 +37,7 @@
 ```xml
 <dependency>
     <groupId>io.github.chenjunwenhao</groupId>
-    <artifactId>sql-analyzer-spring-boot-starter</artifactId>
+    <artifactId>mybatis-sql-optimizer-spring-boot-starter</artifactId>
     <version>1.2.9</version><!-- 最新版本 -->
 </dependency>
 ```
