@@ -1,13 +1,25 @@
 # mybatis-sql-optimizer-spring-boot-starter
-这个starter可以帮助开发者在开发阶段发现SQL性能问题，并提供优化建议，从而提高应用程序的数据库访问效率。
-# SQL 分析优化 Starter
 
 ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 ![License](https://img.shields.io/badge/license-apache2.0-blue)
 
-一个基于 MyBatis 插件和 JSqlParser 解析器的 SQL 分析优化 Starter，提供 SQL 性能分析、优化建议、多数据库兼容支持，并支持同步/异步分析模式，采样率，自定义报告输出形式和自定义分析规则。
+专为 MyBatis 打造的 SQL 智能优化解决方案，无需修改业务代码即可获得专业级 SQL 优化建议，让慢查询无所遁形！
+---
 
-## 功能特性
+## 🌟 核心特性
+
+### 一键式 SQL 优化
+
+- **智能分析引擎**：自动识别`SELECT *`、`执行计划分析`、`索引失效`等 20+ 常见问题
+- **执行计划洞察**：集成 PostgreSQL/MySQL`EXPLAIN`可视化分析
+- **动态缓存建议**：基于访问模式推荐二级缓存最佳配置
+
+### 开发者友好
+
+- **零侵入接入**：Spring Boot Starter 开箱即用
+- **多维度报告**：控制台/邮件/钉钉多维告警（支持自定义阈值）
+
+一个基于 MyBatis 插件和 JSqlParser 解析器的 SQL 分析优化 Starter，提供 SQL 性能分析、优化建议、多数据库兼容支持，并支持同步/异步分析模式，采样率，自定义报告输出形式和自定义分析规则。
 
 - ✅ **SQL 性能分析** - 自动分析执行的 SQL 语句
 - ✅ **优化建议** - 提供索引、改写等优化建议
