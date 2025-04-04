@@ -26,7 +26,7 @@
 <dependency>
     <groupId>io.github.chenjunwenhao</groupId>
     <artifactId>sql-analyzer-spring-boot-starter</artifactId>
-    <version>1.2.8</version><!-- 最新版本 -->
+    <version>1.2.9</version><!-- 最新版本 -->
 </dependency>
 ```
 
@@ -112,7 +112,7 @@ public class CustomReporter implements SqlAnalysisReporter {
 ```
 
 ###  4. 输出样例
-![img.png](img.png)
+![image](https://github.com/user-attachments/assets/ff14bfec-511d-4dec-a61a-d010f1b01883)
 ## 功能详解
 
 ### 分析模式
