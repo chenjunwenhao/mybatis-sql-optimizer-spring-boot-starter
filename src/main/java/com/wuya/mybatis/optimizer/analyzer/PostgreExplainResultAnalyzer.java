@@ -75,7 +75,7 @@ public class PostgreExplainResultAnalyzer implements ExplainResultAnalyzer {
      * @param jsonExplain SQL执行计划的JSON字符串表示
      * @throws Exception 当解析JSON过程中发生错误时抛出
      */
-    private void parse(SqlExplainResult result, String jsonExplain) throws Exception {
+    public void parse(SqlExplainResult result, String jsonExplain) throws Exception {
         // 创建ObjectMapper实例，用于JSON解析
         ObjectMapper mapper = new ObjectMapper();
         // 将JSON字符串解析为JsonNode对象，便于后续处理
@@ -156,7 +156,7 @@ public class PostgreExplainResultAnalyzer implements ExplainResultAnalyzer {
      * @return 解析后的Map对象，包含执行计划信息
      * @throws Exception 解析JSON时可能抛出的异常
      */
-    private Map<String, Object> parseExplainJson(String jsonResult) throws Exception {
+    public Map<String, Object> parseExplainJson(String jsonResult) throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> planMap = mapper.readValue(jsonResult, new TypeReference<Map<String, Object>>() {});
 

@@ -18,14 +18,15 @@ public class DefaultAnalysisReporter implements SqlAnalysisReporter {
 
     /**
      * 生成并输出SQL分析报告
-     * 
+     *
      * @param result SQL解释结果，包含SQL执行的详细信息和分析结果
      * @param dbType 数据库类型，表明SQL执行的数据库环境
+     * @param id SQL执行的标识符，用于标识SQL语句 mybatis的id
      */
     @Override
-    public void report(SqlExplainResult result, DatabaseType dbType) {
+    public void report(SqlExplainResult result, DatabaseType dbType, String id) {
         // 输出SQL分析报告的标题和数据库类型
-        logger.info("===== SQL分析报告 [{}] =====", dbType.getName());
+        logger.info("===== SQL分析报告 [{}:{}] =====", dbType.getName(),id);
         // 输出SQL语句和执行时间
         logger.info("SQL: {}", result.getSql());
         logger.info("执行时间: {}ms", result.getExecutionTime());

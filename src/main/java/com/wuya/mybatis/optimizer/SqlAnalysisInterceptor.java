@@ -101,7 +101,7 @@ public class SqlAnalysisInterceptor implements Interceptor, DisposableBean {
                         .collect(Collectors.toList());
                 explainResult.setAdviceList(adviceList);
 
-                reporters.forEach(reporter -> reporter.report(explainResult, dbType));
+                reporters.forEach(reporter -> reporter.report(explainResult, dbType,mappedStatement.getId()));
             } catch (Exception e) {
                 throw new RuntimeException("SQL分析失败", e);
             }
