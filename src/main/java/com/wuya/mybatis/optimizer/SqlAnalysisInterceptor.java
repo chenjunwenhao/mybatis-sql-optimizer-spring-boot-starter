@@ -37,7 +37,6 @@ public class SqlAnalysisInterceptor implements Interceptor, DisposableBean {
     private final List<SqlOptimizationAdvice> adviceGenerators;
     private final List<SqlAnalysisReporter> reporters;
     private final AsyncSqlAnalysisExecutor asyncExecutor;
-    private static final Logger logger = LoggerFactory.getLogger(SqlAnalysisInterceptor.class);
 
     public SqlAnalysisInterceptor(SqlOptimizerProperties properties,
                                   List<ExplainResultAnalyzer> analyzers,
