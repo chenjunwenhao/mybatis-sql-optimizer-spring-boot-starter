@@ -111,6 +111,12 @@ public class JoinAdviceGenerator implements SqlOptimizationAdvice {
         }
         return false;
     }
+
+    /**
+     * 分析JOIN性能
+     * @param explainPlan
+     * @return
+     */
     public List<String> analyzeJoinPerformance(String explainPlan) {
         List<String> adviceList = new ArrayList<>();
 
