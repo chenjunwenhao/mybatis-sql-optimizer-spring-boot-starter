@@ -168,6 +168,17 @@ public class MybatisSqlOptimizerAutoConfiguration {
     }
 
     /**
+     * 注册 LIMIT 子句分析建议生成器
+     *
+     * @return LIMIT 子句分析建议生成器实例
+     */
+    @Bean
+    @ConditionalOnProperty(name = "mybatis.optimizer.analyze-limit", matchIfMissing = true)
+    public LimitAdviceGenerator limitAdviceGenerator() {
+        return new LimitAdviceGenerator();
+    }
+
+    /**
      * 注册MySQL解释结果分析器
      * 
      * @return MySQL解释结果分析器实例

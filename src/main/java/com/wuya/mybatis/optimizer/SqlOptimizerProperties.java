@@ -39,6 +39,8 @@ public class SqlOptimizerProperties {
     private boolean analyzeWhere = true;
     // 是否分析JOIN操作
     private boolean analyzeJoin = true;
+    // 是否分析LIMIT操作
+    private boolean analyzeLimit = true;
     // 是否分析通用情况
     private boolean analyzeCommon = true;
 

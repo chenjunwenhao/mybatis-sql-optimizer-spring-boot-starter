@@ -26,7 +26,7 @@
 <dependency>
     <groupId>io.github.chenjunwenhao</groupId>
     <artifactId>sql-analyzer-spring-boot-starter</artifactId>
-    <version>1.2.4</version>
+    <version>1.2.8</version><!-- 最新版本 -->
 </dependency>
 ```
 
@@ -37,7 +37,7 @@ mybatis:
   optimizer:
     enabled: true # 启用分析器 默认开启
     explainAll: true # 是否分析所有SQL 默认 true
-    thresholdMillis: 100 # 默认100ms
+    thresholdMillis: 100 # 当explainAll：false时 执行时间超过阈值的才会分析 默认100ms
     async-analysis: true # 使用异步模式 默认同步
     sample-rate: 1 # 采样率(0-1) 默认1
     async-threads: 2  #异步线程数，默认2
@@ -46,6 +46,7 @@ mybatis:
     analyze-select: true # 允许分析SELECT子句 默认true
     analyze-common: true # 允许分析通用（SQL执行时间超过5秒） 默认true
     analyze-where: true # 允许分析WHERE子句 默认true
+    analyze-limit: true # 允许分析LIMIT子句 默认true
     mysql-index: true # 是否分析mysql索引 默认true
     postgre-index: true # 是否分析postgre索引 默认true
     where-function-allowed: # 列函数白名单。默认("ABS", "ROUND", "FLOOR", "CEILING", "COALESCE", "NULLIF")
