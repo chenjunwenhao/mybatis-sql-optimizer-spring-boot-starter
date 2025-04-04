@@ -6,7 +6,7 @@
 
     <groupId>io.github.chenjunwenhao</groupId>
     <artifactId>mybatis-sql-optimizer-spring-boot-starter</artifactId>
-    <version>1.2.8</version>
+    <version>1.2.9</version>
     <packaging>jar</packaging>
 
     <name>MyBatis SQL Optimizer Starter</name>
