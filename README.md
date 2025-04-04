@@ -102,7 +102,7 @@ public class CustomAdvice implements SqlOptimizationAdvice {
 public class CustomReporter implements SqlAnalysisReporter {
     
     @Override
-    public void report(SqlExplainResult result, DatabaseType dbType) {
+    public void report(SqlExplainResult result, DatabaseType dbType, String id) {
         // 发送到日志/邮件/监控系统等
         result.getAdviceList().forEach(result -> {
             log.info("SQL分析结果: {}", result);
