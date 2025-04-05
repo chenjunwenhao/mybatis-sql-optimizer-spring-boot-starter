@@ -6,7 +6,7 @@
 
     <groupId>io.github.chenjunwenhao</groupId>
     <artifactId>mybatis-sql-optimizer-spring-boot-starter</artifactId>
-    <version>1.2.9</version>
+    <version>1.2.10</version>
     <packaging>jar</packaging>
 
     <name>MyBatis SQL Optimizer Starter</name>
@@ -43,12 +43,12 @@
         <maven-javadoc-plugin.version>2.9.1</maven-javadoc-plugin.version>
         <maven-gpg-plugin.version>1.5</maven-gpg-plugin.version>
         <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <central-publishing-maven-plugin.version>0.6.0</central-publishing-maven-plugin.version>
 
         <spring-boot.version>2.7.0</spring-boot.version>
         <mybatis-spring-boot-starter.version>2.2.2</mybatis-spring-boot-starter.version>
         <jsqlparser.version>4.9</jsqlparser.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <central-publishing-maven-plugin.version>0.6.0</central-publishing-maven-plugin.version>
 
         <server.id.value>ossrh</server.id.value>
 
@@ -100,6 +100,13 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
+
+        <!-- Caffeine -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>

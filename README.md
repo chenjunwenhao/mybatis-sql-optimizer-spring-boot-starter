@@ -64,6 +64,13 @@ mybatis:
     where-function-allowed: # 列函数白名单。默认("ABS", "ROUND", "FLOOR", "CEILING", "COALESCE", "NULLIF")
       - "ROUND"
       - "ABS"
+    cache:
+      enabled: true  # 是否启用缓存 默认true
+      spec: "maximumSize=1000,expireAfterWrite=1h,recordStats" # Caffeine原生配置
+      # 或分项配置：
+      # max-size: 1000
+      # expire-time: 1h
+      # record-stats: true
 ```
 
 ### 3. 高级配置

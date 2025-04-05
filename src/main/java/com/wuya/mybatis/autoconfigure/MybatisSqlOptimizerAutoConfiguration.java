@@ -1,5 +1,7 @@
 package com.wuya.mybatis.autoconfigure;
 
+import com.wuya.mybatis.cache.CacheFactory;
+import com.wuya.mybatis.cache.CacheProperties;
 import com.wuya.mybatis.optimizer.SqlAnalysisInterceptor;
 import com.wuya.mybatis.optimizer.SqlAnalysisReporter;
 import com.wuya.mybatis.optimizer.SqlOptimizationAdvice;
@@ -37,7 +39,7 @@ import java.util.List;
 @Configuration
 @ConditionalOnClass({SqlSessionFactory.class, SqlSessionFactoryBean.class})
 @AutoConfigureAfter({MybatisAutoConfiguration.class, DataSourceAutoConfiguration.class})
-@EnableConfigurationProperties(SqlOptimizerProperties.class)
+@EnableConfigurationProperties({SqlOptimizerProperties.class, CacheProperties.class})
 @ConditionalOnProperty(prefix = "mybatis.optimizer", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class MybatisSqlOptimizerAutoConfiguration {
 
@@ -70,8 +72,9 @@ public class MybatisSqlOptimizerAutoConfiguration {
             SqlOptimizerProperties properties,
             List<ExplainResultAnalyzer> analyzers,
             List<SqlOptimizationAdvice> adviceGenerators,
-            List<SqlAnalysisReporter> reporters) {
-        return new SqlAnalysisInterceptor(properties, analyzers, adviceGenerators, reporters);
+            List<SqlAnalysisReporter> reporters,
+            CacheFactory cacheFactory) {
+        return new SqlAnalysisInterceptor(properties, analyzers, adviceGenerators, reporters,cacheFactory);
     }
 
     /**
@@ -176,6 +179,16 @@ public class MybatisSqlOptimizerAutoConfiguration {
     @ConditionalOnProperty(name = "mybatis.optimizer.analyze-limit", matchIfMissing = true)
     public LimitAdviceGenerator limitAdviceGenerator() {
         return new LimitAdviceGenerator();
+    }
+
+    /**
+     * 注册缓存工厂
+     * @param cacheProperties
+     * @return
+     */
+    @Bean
+    public CacheFactory cacheFactory(CacheProperties cacheProperties) {
+        return new CacheFactory(cacheProperties);
     }
 
     /**
