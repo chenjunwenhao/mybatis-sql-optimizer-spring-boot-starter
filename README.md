@@ -38,7 +38,7 @@
 <dependency>
     <groupId>io.github.chenjunwenhao</groupId>
     <artifactId>mybatis-sql-optimizer-spring-boot-starter</artifactId>
-    <version>1.2.9</version><!-- 最新版本 -->
+    <version>1.2.11</version><!-- 最新版本 -->
 </dependency>
 ```
 
@@ -201,5 +201,7 @@ mybatis:
 
 MIT License
 ## 欢迎交流加微信
+wx:xiao_6488
+或扫描下方二维码
 ![8db788e702d354185dec9a25037b722](https://github.com/user-attachments/assets/52cfda16-9454-4f98-b3cf-de2941eb6161)
-
+![8db788e702d354185dec9a25037b722](https://gitee.com/cjw1/huashiren/raw/master/8db788e702d354185dec9a25037b722.jpg)
