@@ -1,6 +1,6 @@
 package com.wuya.mybatis.exception;
 /**
- * exception
+ * SqlOptimizerException
  * @author wuya
  * Created by chenjunwen on 2018/1/25.
  */
