@@ -1,11 +1,15 @@
 package com.wuya.mybatis.optimizer.helper;
 
 import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.session.Configuration;
 
 import java.sql.*;
-
+/**
+ * PostgreSQL EXPLAIN执行器
+ * @author chenjunwen
+ * @version 1.0
+ * @date 2021/08/01 09:09:09
+ */
 public class PgExplainExecutor {
 
     /**
