@@ -37,7 +37,6 @@ public class PostgreExplainResultAnalyzer implements ExplainResultAnalyzer {
 
         Object[] args = invocation.getArgs();
         MappedStatement ms = (MappedStatement) args[0];
-        Object parameter = args[1];
 
 
 

@@ -45,7 +45,6 @@ import static com.wuya.mybatis.optimizer.helper.SqlHepler.shouldExplain;
 })
 public class SqlAnalysisInterceptor implements Interceptor, DisposableBean {
 
-    // 日志对象
     private static final Logger logger = LoggerFactory.getLogger(SqlAnalysisInterceptor.class);
 
     // SQL优化属性配置
@@ -156,6 +155,7 @@ public class SqlAnalysisInterceptor implements Interceptor, DisposableBean {
                     }
                 };
 
+                // 获取分析结果，是否从缓存中获取
                 SqlExplainResult explainResult;
                 if (analysisCache != null) {
                     explainResult = analysisCache.get(sql, k -> sqlExplainResultSupplier.get());
