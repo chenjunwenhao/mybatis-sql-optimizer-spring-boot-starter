@@ -6,6 +6,8 @@ import org.springframework.util.StringUtils;
 
 /**
  * 缓存工厂类，用于创建缓存对象
+ * @author chenjunwen
+ * @date 2023-07-06
  */
 public class CacheFactory {
     // 缓存配置属性
